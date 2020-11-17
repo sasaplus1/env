@@ -19,7 +19,8 @@ build: ## build user-data.img
 .PHONY: download-image
 download-image: image := https://cloud-images.ubuntu.com/releases/focal/release/ubuntu-20.04-server-cloudimg-amd64.img
 download-image: ## download Ubuntu image
-	curl -C - -fsLSOC '$(image)'
+	curl -I '$(image)'
+	curl -fLO '$(image)'
 
 .PHONY: run
 run: options := -net nic -net user,hostfwd=tcp::2222-:22
