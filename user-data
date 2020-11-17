@@ -6,4 +6,10 @@ ssh_pwauth: true
 timezone: Asia/Tokyo
 locale: ja_JP.utf8
 
+# shutdown after cloud-init
+power_state:
+  delay: '+1'
+  mode: poweroff
+  timeout: 30
+
 # vim:ft=yaml:
