@@ -1,0 +1,9 @@
+#cloud-config
+password: sasaplus1
+chpasswd:
+  expire: false
+ssh_pwauth: true
+timezone: Asia/Tokyo
+locale: ja_JP.utf8
+
+# vim:ft=yaml:
