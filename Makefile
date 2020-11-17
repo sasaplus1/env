@@ -17,7 +17,7 @@ build: ## build user-data.img
 	docker run --rm -v "$$PWD:/mnt" $(slug) user-data.img user-data
 
 .PHONY: download-image
-download-image: image := https://cloud-images.ubuntu.com/releases/focal/release-20200916/ubuntu-20.04-server-cloudimg-amd64.img
+download-image: image := https://cloud-images.ubuntu.com/releases/focal/release/ubuntu-20.04-server-cloudimg-amd64.img
 download-image: ## download Ubuntu image
 	curl -C - -fsLSOC '$(image)'
 
