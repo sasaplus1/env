@@ -1,0 +1,26 @@
+name: build
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: apt --yes update
+      - run: apt --yes install cloud-image-utils qemu
+      - run: make download-image
+      - run: make build
+      - run: >
+          qemu-system-x86_64
+          -net nic
+          -net user,hostfwd=tcp::2222-:22
+          -drive file=ubuntu-20.04-server-cloudimg-amd64.img,format=qcow2
+          -drive file=user-data.img,format=raw
+          -enable-kvm
+          -nographic
+          -serial mon:stdio
+          --cpu host
