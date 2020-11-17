@@ -17,10 +17,7 @@ jobs:
       - run: >
           qemu-system-x86_64
           -net nic
-          -net user,hostfwd=tcp::2222-:22
           -drive file=ubuntu-20.04-server-cloudimg-amd64.img,format=qcow2
           -drive file=user-data.img,format=raw
-          -enable-kvm
           -nographic
-          -serial mon:stdio
-          --cpu host
+          -serial stdio
