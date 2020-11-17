@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: apt --yes update
-      - run: apt --yes install cloud-image-utils qemu
+      - run: sudo apt --yes update
+      - run: sudo apt --yes install cloud-image-utils qemu
       - run: make download-image
       - run: make build
       - run: >
