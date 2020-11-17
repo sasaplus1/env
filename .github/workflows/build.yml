@@ -13,19 +13,22 @@ jobs:
         with:
           key: ${{ runner.os }}-ubuntu-apt-cache
           path: /var/cache/apt/archives
-      - uses: actions/cache@v2
+      - id: cache-img
+        uses: actions/cache@v2
         with:
-          key: ${{ runner.os }}-ubuntu-iso-${{ hashFiles('ubuntu-20.04-server-cloudimg-amd64.img') }}
+          key: ${{ runner.os }}-ubuntu-img-${{ hashFiles('ubuntu-20.04-server-cloudimg-amd64.img') }}
           path: ubuntu-20.04-server-cloudimg-amd64.img
       - uses: actions/checkout@v2
       - run: sudo apt --yes update
       - run: sudo apt --yes install cloud-image-utils qemu
       - run: make download-image
-      - run: make build
+        if: steps.cache-img.outputs.cache-hit != 'true'
+      - run: cloud-localds user-data.img user-data
+      - run: sudo chown runner:docker user-data.img
       - run: >
           qemu-system-x86_64
           -net nic
           -drive file=ubuntu-20.04-server-cloudimg-amd64.img,format=qcow2
           -drive file=user-data.img,format=raw
           -nographic
-          -serial stdio
+          -serial mon:stdio
