@@ -9,6 +9,10 @@ jobs:
     name: build
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/cache@v2
+        with:
+          key: ${{ runner.os }}-ubuntu-iso-${{ hashFiles('ubuntu-20.04-server-cloudimg-amd64.img') }}
+          path: ubuntu-20.04-server-cloudimg-amd64.img
       - uses: actions/checkout@v2
       - run: sudo apt --yes update
       - run: sudo apt --yes install cloud-image-utils qemu
